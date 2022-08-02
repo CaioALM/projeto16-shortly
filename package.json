@@ -1,9 +1,8 @@
 {
   "name": "projeto16-shortly",
   "version": "1.0.0",
-  "description": "",
   "main": "app.js",
-  "type":"module",
+  "type": "module",
   "scripts": {
     "start": "node app.js",
     "test": "echo \"Error: no test specified\" && exit 1"
@@ -18,5 +17,12 @@
   "bugs": {
     "url": "https://github.com/CaioALM/projeto16-shortly/issues"
   },
-  "homepage": "https://github.com/CaioALM/projeto16-shortly#readme"
+  "homepage": "https://github.com/CaioALM/projeto16-shortly#readme",
+  "description": "",
+  "dependencies": {
+    "chalk": "^5.0.1",
+    "cors": "^2.8.5",
+    "dotenv": "^16.0.1",
+    "express": "^4.18.1"
+  }
 }

@@ -1,0 +1,22 @@
+{
+  "name": "projeto16-shortly",
+  "version": "1.0.0",
+  "description": "",
+  "main": "app.js",
+  "type":"module",
+  "scripts": {
+    "start": "node app.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/CaioALM/projeto16-shortly.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/CaioALM/projeto16-shortly/issues"
+  },
+  "homepage": "https://github.com/CaioALM/projeto16-shortly#readme"
+}

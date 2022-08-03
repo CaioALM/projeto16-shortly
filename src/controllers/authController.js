@@ -1,20 +1,19 @@
 import bcrypt from 'bcrypt';
+import jwt from 'jsonwebtoken';
+import dotenv from 'dotenv';
 import registerSchema from '../schemas/registerSchema.js';
+import loginSchema from '../schemas/loginSchema.js';
 
+import connection from '../../database.js';
+dotenv.config();
 
 export async function postRegister(req, res) {
     const user = req.body;
-    const validation = registerSchema.validate(user, { abortEarly: false});
-    
-    if (validation.error ) {
-        return res.status(422).send(validation.error.details.map((el) => el.message));
-    }
 
     try {
-        
-        const { rows: users } = await connection.query("SELECT * FROM users");
+        const { rows: users } = await connection.query("SELECT * FROM users WHERE email=$1", [user.email]);
 
-        if ( users.find(el => el.email === user.email)) return res.sendStatus(409);
+        if ( users.length !== 0 ) return res.sendStatus(409);
 
         let bcryptPassword = bcrypt.hashSync(user.password, 10);
 
@@ -25,4 +24,38 @@ export async function postRegister(req, res) {
     }
 
 }
+
+export async function postLogin(req, res) { 
+
+    const user = req.body;
+    
+    try {
+
+        const  { rows: users } = await connection.query(`SELECT * FROM users WHERE email=$1`, [user.email]);
+        console.log("Usuários do banco", users.rowCount);
+        if(users.rowCount == 0){
+            return res.sendStatus(401);
+        }
+
+        if(bcrypt.compareSync(user.password, users.password)){
+
+            const data = {
+                id: users.id,
+                name: users.name,
+            }
+            const secretKey = process.env.JWT_SECRET;
+            const token = jwt.sign(data, secretKey);
+
+            await connection.query(`INSERT INTO sessions (token, "userId") VALUES ($1, $2)`, [token, users.id])
+            return res.status(200).send(token);
+        }
+
+        res.sendStatus(401);
+
+    } catch (error) {
+        
+        return res.sendStatus(500)
+    }
+}
+
 

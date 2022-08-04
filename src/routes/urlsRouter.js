@@ -1,10 +1,13 @@
 import { Router } from "express";
-import { postRegister, postLogin } from "../controllers/authController.js";
+import { postUrl, getShortUrl, getUrl, deleteUrl } from "../controllers/urlsController.js";
+import { urlsSchemaValidate } from "../middlewares/urlsMiddleware.js";
+import { validateToken }from "../middlewares/validateToken.js";
 
+const urlsRouter = Router();
 
-const authRouter = Router();
-
-authRouter.post("/urls/shorten", autenticar, postRegister);
-authRouter.post("/signin", postLogin);
+urlsRouter.post("/urls/shorten", urlsSchemaValidate, validateToken, postUrl);
+urlsRouter.get("/urls/:id", getShortUrl);
+urlsRouter.get("/urls/open/:shortUrl", getUrl);
+urlsRouter.delete("/urls/:id", validateToken, deletetUrl);    
 
 export default authRouter;

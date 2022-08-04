@@ -1,6 +1,6 @@
 import registerSchema from "../schemas/registerSchema.js";
 
-export default function registerValidateSchema(req, res, next) {
+export async function registerSchemaValidate(req, res, next) {
 
 const validation = registerSchema.validate(req.body, { abortEarly: false});
     

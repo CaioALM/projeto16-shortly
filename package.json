@@ -1,0 +1,35 @@
+{
+  "name": "projeto16-shortly",
+  "version": "1.0.0",
+  "main": "app.js",
+  "type": "module",
+  "nodemonConfig": {
+    "ext": "js,coffee,json,env",
+    "watch": ".env"
+  },
+  "scripts": {
+    "start": "node ./src/app.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/CaioALM/projeto16-shortly.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/CaioALM/projeto16-shortly/issues"
+  },
+  "homepage": "https://github.com/CaioALM/projeto16-shortly#readme",
+  "description": "",
+  "dependencies": {
+    "bcrypt": "^5.0.1",
+    "chalk": "^5.0.1",
+    "cors": "^2.8.5",
+    "dotenv": "^16.0.1",
+    "express": "^4.18.1",
+    "nanoid": "^4.0.0",
+    "pg": "^8.7.3"
+  }
+}

@@ -68,9 +68,18 @@ export async function getUrl(req, res) {
 }
 
 export async function deleteUrl(req, res) {
-
+        const { id } = req.params;
+        const { users } = res.locals
     try {
+            const { rows: url } = await connection.query(`
+            SELECT * FROM users WHERE id = $1`, [id]);
 
+            if (url.userId !== users.id ) return res.sendStatus(401);
+
+            await connection.query(`
+            DELETE FROM urls WHERE id = $1`, [id]);
+            return res.sendStatus(401);
+            
     } catch (error) {
         console.log(error);
         return res.sendStatus(500);

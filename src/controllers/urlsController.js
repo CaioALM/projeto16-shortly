@@ -18,7 +18,7 @@ export async function  postUrl(req, res) {
 
  } catch(error){
     console.log(error)
-    return res.sendStatus(500)
+    return res.sendStatus(422)
  }
 
 }
@@ -35,12 +35,12 @@ export async function getShortUrl(req, res) {
             url: url.url
         }
 
-        if (!url) return res.sendStatus(404);
+        if (url.rowCount === 0) return res.sendStatus(404);
 
         return res.status(201).send(data);
     } catch (error) {
         console.log(error) 
-        return res.sendStatus(500)
+        return res.sendStatus(404)
     }
 }
 
@@ -53,7 +53,7 @@ export async function getUrl(req, res) {
         const { rows: url } = await connection.query(`
         SELECT * FROM urls WHERE shortUrl = $1`, [ shortUrl ]);
         
-        if (!url) return res.sendStatus(404);
+        if (url.rowCount === 0) return res.sendStatus(404);
 
         await connection.query(`
         UPDATE "urls" SET "viewCount" = "viewCount" + 1 WHERE id = $1`,
@@ -63,7 +63,7 @@ export async function getUrl(req, res) {
 
     } catch(error) {
         console.log(error);
-        return res.sendStatus(500);
+        return res.sendStatus(404);
     }
 }
 
@@ -79,10 +79,10 @@ export async function deleteUrl(req, res) {
             await connection.query(`
             DELETE FROM urls WHERE id = $1`, [id]);
             return res.sendStatus(401);
-            
+
     } catch (error) {
         console.log(error);
-        return res.sendStatus(500);
+        return res.sendStatus(404);
     }
 }
 

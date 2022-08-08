@@ -1,6 +1,6 @@
-import { Router } from "Router";
+import { Router } from "express";
 import { validateToken } from "../middlewares/validateToken.js";
-import { getUser } from "../controllers/usersController.js";
+import { getUser, getRanking } from "../controllers/usersController.js";
 
 
 const userRouter = Router();
